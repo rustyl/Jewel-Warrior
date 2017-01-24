@@ -54,6 +54,7 @@ jewel.screens["game-screen"] = (function () {
         dom.bind("footer button.exit", "click", exitGame);
         dom.bind("footer button.pause", "click", pauseGame);
         dom.bind(".pause-overlay", "click", resumeGame);
+        jewel.input.initialize();
     }
 
     function run() {
