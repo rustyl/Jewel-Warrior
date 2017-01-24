@@ -1,6 +1,7 @@
 jewel.screens["game-screen"] = (function () {
     var paused,
-        firstRun = true;
+        firstRun = true,
+        cursor;
 
     function exitGame() {
         pauseGame();
@@ -20,6 +21,11 @@ jewel.screens["game-screen"] = (function () {
 //console.log("in screen.game.js startGame");
         board.initialize(function () {
             display.initialize(function () {
+                cursor = {
+                    x: 0,
+                    y: 0,
+                    selected: false
+                };
                 //start the game
                 display.redraw(board.getBoard(), function () {
                     // do nothing for now
@@ -49,11 +55,18 @@ jewel.screens["game-screen"] = (function () {
         paused = false;
     }
 
+    function setCursor(x, y, select) {
+        cursor.x = x;
+        cursor.y = y;
+        cursor.selected = select;
+    }
+
     function setup() {
         var dom = jewel.dom;
         dom.bind("footer button.exit", "click", exitGame);
         dom.bind("footer button.pause", "click", pauseGame);
         dom.bind(".pause-overlay", "click", resumeGame);
+        jewel.input.initialize();
     }
 
     function run() {
