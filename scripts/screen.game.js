@@ -145,6 +145,8 @@ jewel.screens["game-screen"] = (function () {
         cursor.x = x;
         cursor.y = y;
         cursor.selected = select;
+        // Listing 8-32
+        jewel.display.setCursor(x, y, select);
     }
 
     function setup() {
@@ -152,7 +154,13 @@ jewel.screens["game-screen"] = (function () {
         dom.bind("footer button.exit", "click", exitGame);
         dom.bind("footer button.pause", "click", pauseGame);
         dom.bind(".pause-overlay", "click", resumeGame);
-        jewel.input.initialize();
+        var input = jewel.input;
+        input.initialize();
+        input.bind("selectJewel", selectJewel);
+        input.bind("moveUp", moveUp);
+        input.bind("moveDown", moveDown);
+        input.bind("moveLeft", moveLeft);
+        input.bind("moveRight", moveRight);
     }
 
     function run() {
