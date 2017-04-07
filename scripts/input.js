@@ -50,7 +50,7 @@ jewel.input = (function () {
         // trigger a game action
         var handlers = inputHandlers[action],
             args = Array.prototype.slice.call(arguments, 1);
-console.log("Game action: " + action);
+//console.log("Game action: " + action);
         if (handlers) {
             for (var i=0;i<handlers.length;i++) {
                 handlers[i].apply(null, args);

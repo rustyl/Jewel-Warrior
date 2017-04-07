@@ -22,7 +22,10 @@ var jewel = (function() {
             LEFT_STICK_DOWN: "moveDown",
             LEFT_STICK_LEFT: "moveLeft",
             LEFT_STICK_RIGHT: "moveRight"
-        }
+        },
+        baseLevelTimer: 60000,
+        baseLevelScore: 1500,
+        baseLevelExp: 1.05
     };
 
     var scriptQueue = [],
@@ -87,7 +90,7 @@ var jewel = (function() {
         } else {
             jewel.showScreen("install-screen");
         }
-        console.log("Jewel.setup success");
+//console.log("Jewel.setup success");
     }
 
     // hide the actiove screen if any and show the screen
@@ -98,7 +101,7 @@ var jewel = (function() {
             activeScreen = $("#game .screen.active")[0],
             screen = $("#" + screenId)[0];
 
-console.log("in showScreen with "+screenId+screen)
+//console.log("in showScreen with "+screenId+screen)
         if (!jewel.screens[screenId]) {
             alert("This module is not implemented !");
             return;

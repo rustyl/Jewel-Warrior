@@ -14,7 +14,7 @@ jewel.board = (function () {
         rows = settings.rows;
         fillBoard();
         if (callback) {
-console.log("in jewel.board about to display.initalize");
+//console.log("in jewel.board about to display.initalize");
             callback();
         }
     }
@@ -60,7 +60,7 @@ console.log("in jewel.board about to display.initalize");
             }
             str += "\r\n";
         }
-        console.log(str);
+//console.log(str);
     }
 
     function checkChain (x,y) {
@@ -205,8 +205,44 @@ console.log("in jewel.board about to display.initalize");
     }
 
     function swap(x1, y1, x2, y2 ,callback) {
-        var tmp, events;
-        if (canSwap(x1,y1,x2,y2)) {
+        var tmp, swap1, swap2,
+            events = [];
+
+        swap1 = {
+            type: "move",
+            data: [{
+                type: getJewel(x1,y1),
+                fromX: x1, fromY: y1, toX: x2, toY: y2
+            }, {
+                type: getJewel(x2,y2),
+                fromX: x2, fromY: y2, toX: x1, toY: y1
+            }]
+        };
+        swap2 = {
+            type: "move",
+            data: [{
+                type: getJewel(x2,y2),
+                fromX: x1, fromY: y1, toX: x2, toY: y2
+            }, {
+                type: getJewel(x1,y1),
+                fromX: x2, fromY: y2, toX: x1, toY: y1
+            }]
+        };
+        if (isAdjacent(x1,y1,x2,y2)) {
+            events.push(swap1);
+            if (canSwap(x1, y1, x2, y2)) {
+                tmp = getJewel(x1, y1);
+                jewels[x1][y1] = getJewel(x2, y2);
+                jewels[x2][y2] = tmp;
+                events = events.concat(check());
+            } else {
+                events.push(swap2, {type: "badswap"});
+            }
+            callback(events);
+        }
+
+
+/*        if (canSwap(x1,y1,x2,y2)) {
             tmp = getJewel(x1,y1);
             jewels[x1][y1] = getJewel(x2,y2);
             jewels[x2][y2] = tmp;
@@ -215,6 +251,7 @@ console.log("in jewel.board about to display.initalize");
         } else {
             callback(false);
         }
+*/
     }
 
     return {
